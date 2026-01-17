@@ -1,7 +1,11 @@
 use axum::{
     extract::{Path, State},
     http::StatusCode,
-    routing::{get, post, patch, delete},
+    routing::{get, 
+        post, 
+        patch, 
+        delete
+        },
     Json, Router,
 };
 use serde::{Deserialize, Serialize};
@@ -55,8 +59,10 @@ async fn main() {
 
     let app = Router::new()
         .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
-        .route("/todos", get(get_todos).post(create_todo))
-        .route("/todos/{id}", patch(update_todo).delete(delete_todo))
+        .route("/getTodos", get(get_todos))
+        .route("/editTodos/{id}", patch(update_todo))
+        .route("/deleteTodos/{id}", delete(delete_todo))
+        .route("/addTodos", post(create_todo))
         .layer(cors)
         .with_state(pool);
 
@@ -71,7 +77,7 @@ async fn main() {
 // --- Handlers ---
 
 #[utoipa::path(
-    get, path = "/todos",
+    get, path = "/getTodos",
     responses((status = 200, description = "List all todos", body = [Todo]))
 )]
 async fn get_todos(State(pool): State<PgPool>) -> Json<Vec<Todo>> {
@@ -83,7 +89,7 @@ async fn get_todos(State(pool): State<PgPool>) -> Json<Vec<Todo>> {
 }
 
 #[utoipa::path(
-    post, path = "/todos", request_body = CreateTodo,
+    post, path = "/addTodos", request_body = CreateTodo,
     responses((status = 201, description = "Todo created", body = Todo))
 )]
 async fn create_todo(
@@ -104,7 +110,7 @@ async fn create_todo(
 }
 
 #[utoipa::path(
-    patch, path = "/todos/{id}", request_body = UpdateTodo,
+    patch, path = "/editTodos/{id}", request_body = UpdateTodo,
     responses((status = 200, description = "Todo updated"))
 )]
 async fn update_todo(
@@ -122,7 +128,7 @@ async fn update_todo(
 }
 
 #[utoipa::path(
-    delete, path = "/todos/{id}",
+    delete, path = "/deleteTodos/{id}",
     responses((status = 204, description = "Todo deleted"))
 )]
 async fn delete_todo(State(pool): State<PgPool>, Path(id): Path<Uuid>) -> StatusCode {

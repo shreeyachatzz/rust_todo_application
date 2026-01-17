@@ -13,12 +13,13 @@ function App() {
   const [newTodoTitle, setNewTodoTitle] = useState("");
   const [isAdding, setIsAdding] = useState(false); // Controls input visibility
 
-  const API_URL = "http://localhost:3000/todos";
+  const API_URL = "http://localhost:3000";
+  
 
   // 1. Fetch Todos
   const fetchTodos = async () => {
     try {
-      const res = await fetch(API_URL);
+      const res = await fetch(`${API_URL}/getTodos`);
       const data = await res.json();
       // Sort: Completed items go to bottom
       const sorted = data.sort((a: Todo, b: Todo) => Number(a.completed) - Number(b.completed));
@@ -36,7 +37,7 @@ function App() {
   const handleAddTodo = async () => {
     if (!newTodoTitle.trim()) return;
     
-    await fetch(API_URL, {
+    await fetch(`${API_URL}/addTodos`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title: newTodoTitle })
@@ -52,7 +53,7 @@ function App() {
     // Optimistic update for UI responsiveness
     setTodos(todos.map(t => t.id === id ? { ...t, completed: !currentStatus } : t));
 
-    await fetch(`${API_URL}/${id}`, {
+    await fetch(`${API_URL}/editTodos/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ completed: !currentStatus })
@@ -62,7 +63,7 @@ function App() {
 
   // 4. Delete Todo
   const deleteTodo = async (id: string) => {
-    await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    await fetch(`${API_URL}/deleteTodos/${id}`, { method: "DELETE" });
     fetchTodos();
   };
 
