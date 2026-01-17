@@ -1,7 +1,3 @@
-Here is a professional `README.md` file for your project. You can save this as `README.md` in the root directory of your project.
-
----
-
 # Rust + React To-Do Application 🦀 ⚛️
 
 A high-performance, full-stack To-Do application built with **Rust (Axum)**, **PostgreSQL**, and **React (TypeScript)**. This project demonstrates a clean "API-first" architecture with automated Swagger documentation and a minimalist dark-themed UI.
