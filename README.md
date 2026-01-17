@@ -15,6 +15,12 @@ A high-performance, full-stack To-Do application built with **Rust (Axum)**, **P
 * **Dark Minimalist UI:** Custom CSS styling with a focus on usability and aesthetics.
 * **Dockerized Database:** PostgreSQL runs in an isolated container for easy setup.
 
+## FRONTEND:
+![Frontend of the Application](image.png)
+
+## SWAGGERS:
+![swagger link](image-1.png)
+
 ## 🛠 Tech Stack
 
 **Backend**
