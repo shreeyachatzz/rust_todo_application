@@ -1,0 +1,1 @@
+cargo:rustc-env=MIME_TYPES_GENERATED_PATH=/Users/chatz/Desktop/Code/RUST/rust-react-todo/backend/target/debug/build/mime_guess-cf2f8272b7cc9361/out/mime_types_generated.rs
